@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NeswItem from "./NeswItem";
 import Page from "./Page";
 import Spinner from "./Spinner";
+import PropTypes from 'prop-types';
 
 export default class News extends Component {
   constructor() {
@@ -9,63 +10,53 @@ export default class News extends Component {
     this.state = {
       articls: [],
       loading: false,
-      page: 1,
-      totalResults:0,
-      pageSize:18 
+      totalResults:0 
     };
   }
-
-  async componentDidMount() {
-    this.setState({
-      loading: true
-    });
-    let url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=405cd35c9c664fef82d00a3837208804&pageSize=18";
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    this.setState({ articls: parsedData.articles, 
-                    totalResults: parsedData.totalResults,
-                    loading: false });
+  page = 1;
+    display (){
+    console.log(this.props.title)
+    console.log(this.props.country)
+    console.log(this.props.category)
+    console.log(this.props.pageSize)
+    console.log(this.state.page)
   }
 
-  handlePrevClick = async () => {
-    console.log("previous");
-    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=405cd35c9c664fef82d00a3837208804&page=${this.state.page - 1}&pageSize=18`;
+  async updateArticles () {
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=405cd35c9c664fef82d00a3837208804&page=${this.page}&pageSize=${this.props.pageSize}`;
     this.setState({
       loading: true
     });
     let data = await fetch(url);
     let parsedData = await data.json();
-    this.setState({ articls: parsedData.articles });
-    this.setState({
-      page: this.state.page - 1,
-      articls: parsedData.articles,
-      totalResults:parsedData.totalResults,
-      loading: false
-    });
+    this.setState({ loading:false,
+    articls: parsedData.articles, 
+    totalResults: parsedData.totalResults});
+  }
+  
+  async componentDidMount() {
+    this.updateArticles();
+    this.display();
+  };
+  
+  handlePrevClick = async () => {
+    this.page = this.page - 1;
+    this.updateArticles();
+    this.display();
   };
   handleNextClick = async () => {
-    console.log("next"); let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=405cd35c9c664fef82d00a3837208804&page=${this.state.page + 1}&pageSize=18`;
-    this.setState({
-      loading: true
-    });
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    this.setState({
-      page: this.state.page + 1,
-      articls: parsedData.articles,
-      totalResults : parsedData.totalResults,
-      loading:false
-    });
+    this.page = this.page + 1;
+    this.updateArticles();
+    this.display();
   };
 
   render() {
     return (
       <React.Fragment>
-        {/* Page component */}
         <div className="container my-3">
           {/* Page component */}
-          {!this.state.loading && <Page page={this.state.page} pageSize={this.state.pageSize} handleNextClick={this.handleNextClick} handlePrevClick={this.handlePrevClick} totalResults={this.state.totalResults} />}
-          <h1>{this.props.title}</h1>
+          {!this.state.loading && <Page page={this.page} pageSize={this.props.pageSize} handleNextClick={this.handleNextClick} handlePrevClick={this.handlePrevClick} totalResults={this.state.totalResults} />}
+          <h1 style={{margin:'0.625rem'}} >{this.props.title}</h1>
           {/* Spinner component */}
           {this.state.loading && <Spinner/>}
 
@@ -78,13 +69,16 @@ export default class News extends Component {
                       title={
                         element.title !== null
                           ? element.title
-                          : "Click to know more"
+                          : "No Title"
                       }
                       description={
-                        element.description ? element.description : ""
+                        element.description ? element.description : "No Description"
                       }
-                      imageUrl={element.urlToImage ? element.urlToImage : "/"}
+                      imageUrl={element.urlToImage }
                       newsUrl={element.url}
+                      date={element.publishedAt}
+                      auther={element.auther}
+                      source={element.source.name}
                     />
                   </div>
                 );
@@ -94,9 +88,22 @@ export default class News extends Component {
           </div>
 
           {/* Page */}
-          {!this.state.loading && <Page page={this.state.page} pageSize={this.state.pageSize} handleNextClick={this.handleNextClick} handlePrevClick={this.handlePrevClick} totalResults={this.state.totalResults}  />}
+          {!this.state.loading && <Page page={this.page} pageSize={this.props.pageSize} handleNextClick={this.handleNextClick} handlePrevClick={this.handlePrevClick} totalResults={this.state.totalResults}  />}
         </div>
       </React.Fragment>
     );
   }
+}
+
+News.propTypes = {
+  country:PropTypes.string,
+  title:PropTypes.string,
+  category:PropTypes.string,
+  pageSize:PropTypes.number
+}
+News.defaltProps = {
+  country:"in",
+  title:"Top Headline",
+  category:"general",
+  pageSize:9
 }
