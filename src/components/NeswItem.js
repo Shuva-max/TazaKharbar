@@ -1,19 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class NeswItem extends Component {
-  render() {
-    let { title, description, imageUrl, newsUrl, auther, date, source } = this.props;
+export default function NeswItem (props) {
+    let { title, description, imageUrl, newsUrl, author, date, source } = props;
     return (
       <div>
-        <div className="card" style={{ width: "21rem" }}>
-          <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger" style={{left:'93%',zIndex:'1'}} >{source}</span>
+        <div className="card mx-1 my-1">
+          <div>
+          <span className="badge rounded-pill bg-danger"  style={{display:'flex',right:'-9px',top:'-4px',position:'absolute'}}>{source}</span>
+            
+          </div>
           <img src={imageUrl} className="card-img-top" alt="..." />
           <div className="card-body">
             <h5 className="card-title">{title}</h5>
             <p className="card-text">{description}</p>
             <p className="card-text text-end">
               <small className="text-muted">
-                By {auther} on {new Date(date).toGMTString()}
+                {author?"By "+author:""} on {new Date(date).toGMTString()}
               </small>
             </p>
             <a
@@ -28,5 +30,5 @@ export default class NeswItem extends Component {
         </div>
       </div>
     );
-  }
+
 }
