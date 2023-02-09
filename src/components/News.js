@@ -84,13 +84,13 @@ News.propTypes = {
   country: PropTypes.string,
   title: PropTypes.string,
   category: PropTypes.string,
-  pageSize: PropTypes.number,
+  pageSize: PropTypes.number
 };
 News.defaltProps = {
   country: "in",
   title: "Top Headline",
   category: "general",
-  pageSize: 9,
+  pageSize: 9
 };
 
 export default News;

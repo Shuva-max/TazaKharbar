@@ -22,7 +22,6 @@ export default function Navber(props) {
                         <li className="nav-item"><Link className= "nav-link px-3" to="/technology"> Technology </Link></li>
                         <li className="nav-item"><Link className= "nav-link px-3" to="/sports"> Sports </Link></li>
                       
-                        {/* <li className="nav-item"><Link className="nav-link" to="/about">About</Link></li> */}
                     </ul>
               
                 </div>
