@@ -18,14 +18,17 @@ export default function NeswItem (props) {
                 {author?"By "+author:""} on {new Date(date).toGMTString()}
               </small>
             </p>
+            <div id="anchor-btn" style={{display:'flex',justifyContent:'end'}}> 
             <a
               href={newsUrl}
               target="_blank"
               rel="noreferrer"
-              className="btn btn-md btn-primary"
+              className="btn btn-sm btn-primary"
             >
               Read More
             </a>
+              
+            </div>
           </div>
         </div>
       </div>
