@@ -6,11 +6,19 @@ export default function Navber(props) {
 
     useEffect(()=>{
         let afterTitle = capitalizedFirstLetter(location.pathname);
-        document.title = `Tazakharbar | Top ${afterTitle}`;
+        if(afterTitle.length === 0){
+            document.title = "TazaKharbar - get your daily news for free!";
+        } else{
+            document.title = `Tazakharbar | Top ${afterTitle}`;
+        }
     }, [location.pathname])
 
     const capitalizedFirstLetter =(str)=> {
-        let tName = str.slice(1);
+        let tName;
+        if (str.lenght >1){
+            tName = str.slice(1);
+        }
+        tName = str.slice(1);
         return tName.charAt(0).toUpperCase() + tName.slice(1);
     }
 

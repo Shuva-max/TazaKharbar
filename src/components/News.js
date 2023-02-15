@@ -3,11 +3,27 @@ import NeswItem from "./NeswItem";
 import Spinner from "./Spinner";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useLocation } from "react-router-dom";
 
 const News =(props)=> {
   const [articls, setAriticls] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [page, setPage] = useState(1)
+  const [category, setCategory] = useState(props.category);
+
+  const location = useLocation();
+
+  const handleChangeCategory = ()=>{
+    if(location.pathname === '/'){
+      setCategory("");
+    } else{
+      setCategory(props.category);
+    }
+  }
+  useEffect(()=>{
+    handleChangeCategory();
+     // eslint-disable-next-line 
+  }, [category])
 
   const updateArticles = async()=> {
     props.setProgress(10);
@@ -21,7 +37,10 @@ const News =(props)=> {
   }
 
   const capitalizedFirstLetter =(str)=> {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    if(str !== ""){
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    return ;
   }
 
   useEffect(()=>{
@@ -43,7 +62,7 @@ const News =(props)=> {
       <React.Fragment>
         <div className="container my-2">
           <h1 style={{margin:'69px 0 14px 0', textAlign:'center'}}>
-            TazaKharbar - Top {capitalizedFirstLetter(props.category)} Headlines
+            TazaKharbar - Top {capitalizedFirstLetter(category)} Headlines
           </h1>
           <InfiniteScroll
             dataLength={articls.length}
