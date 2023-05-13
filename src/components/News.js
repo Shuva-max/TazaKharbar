@@ -22,12 +22,12 @@ const News =(props)=> {
   }
   useEffect(()=>{
     handleChangeCategory();
-     // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [category])
 
   const updateArticles = async()=> {
     props.setProgress(10);
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey?props.apiKey:'405cd35c9c664fef82d00a3837208804'}&page=${page}&pageSize=${props.pageSize}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     props.setProgress(30);
@@ -67,7 +67,7 @@ const News =(props)=> {
           <InfiniteScroll
             dataLength={articls.length}
             next={fetchMoreData}
-            hasMore={articls.lentgh !== totalResults}
+            hasMore={articls.length !== totalResults}
             loader={<Spinner />}
           >
             <div className="container">

@@ -27,13 +27,21 @@ const App =()=> {
 
       <Routes>
           <Route exact path="/" element={<News apiKey={apiKey} setProgress={setProgress} key="general" category="general" country="in" pageSize={pageSize} />} > </Route>
+
           <Route path="/general" element={<News apiKey={apiKey} setProgress={setProgress} key="general1" category="general" country="in" pageSize={pageSize} />} > </Route>
+
           <Route path="/sports" element={<News apiKey={apiKey} setProgress={setProgress} key="sports" category="sports" country="in" pageSize={pageSize} />} > </Route>
+          
           <Route path="/business" element={<News apiKey={apiKey} setProgress={setProgress} key="business" category="business" country="in" pageSize={pageSize} />} > </Route>
+          
           <Route path="/entertainment" element={<News apiKey={apiKey} setProgress={setProgress} key="entertainment" category="entertainment" country="in" pageSize={pageSize} />} > </Route>
+          
           <Route path="/health" element={<News apiKey={apiKey} setProgress={setProgress} key="health" category="health" country="in" pageSize={pageSize} />} > </Route>
+          
           <Route path="/technology" element={<News apiKey={apiKey} setProgress={setProgress} key="technology" category="technology" country="in" pageSize={pageSize} />} > </Route>
+          
           <Route path="/science" element={<News apiKey={apiKey} setProgress={setProgress} key="science" category="science" country="in" pageSize={pageSize} />} > </Route>
+          
 
         </Routes>
 
