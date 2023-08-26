@@ -1,7 +1,9 @@
 import React from "react";
 
 export default function NeswItem (props) {
+  // Destructuring the Props Method in JavaScript
     let { title, description, imageUrl, newsUrl, author, date, source } = props;
+
     return (
       <div>
         <div className="card mx-1 my-1">

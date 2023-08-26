@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import NeswItem from "./NeswItem";
-import Spinner from "./Spinner";
+import Spinner from "./Spinner"
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useLocation } from "react-router-dom";
 
 const News =(props)=> {
+  const fpage = 9;
   const [articls, setAriticls] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [page, setPage] = useState(1)
   const [category, setCategory] = useState(props.category);
+  const [loading, setLoading] = useState(false);
 
   const location = useLocation();
 
@@ -27,13 +29,17 @@ const News =(props)=> {
 
   const updateArticles = async()=> {
     props.setProgress(10);
+    setLoading(true)
+
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+
     let data = await fetch(url);
     let parsedData = await data.json();
     props.setProgress(30);
     setAriticls(parsedData.articles)
     setTotalResults(parsedData.totalResults)
     props.setProgress(100);
+    setLoading(false)
   }
 
   const capitalizedFirstLetter =(str)=> {
@@ -55,7 +61,7 @@ const News =(props)=> {
     setPage(page+1)
     setAriticls(articls.concat(parsedData.articles))
     setTotalResults(parsedData.totalResults)
-    console.log("this is from fetch fuction", articls.length,totalResults);
+    console.log("this is from fetch fuction", articls.length,totalResults, page);
   };
 
     return (
@@ -64,14 +70,16 @@ const News =(props)=> {
           <h1 style={{margin:'69px 0 14px 0', textAlign:'center'}}>
             TazaKharbar - Top {capitalizedFirstLetter(category)} Headlines
           </h1>
+          {loading && <Spinner/>}
           <InfiniteScroll
             dataLength={articls.length}
             next={fetchMoreData}
-            hasMore={articls.length !== totalResults}
+            hasMore={fpage*page <= totalResults}
             loader={<Spinner />}
           >
             <div className="container">
               <div className="row">
+                {/* Map function */}
                 {articls.map((element) => {
                   return (
                     <div className="col-md-4 mb-1" key={element.url}>
