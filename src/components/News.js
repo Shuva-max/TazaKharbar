@@ -61,7 +61,7 @@ const News =(props)=> {
     setPage(page+1)
     setAriticls(articls.concat(parsedData.articles))
     setTotalResults(parsedData.totalResults)
-    console.log("this is from fetch fuction", articls.length,totalResults, page);
+    // console.log("this is from fetch fuction", articls.length,totalResults, page);
   };
 
     return (
@@ -84,11 +84,11 @@ const News =(props)=> {
                   return (
                     <div className="col-md-4 mb-1" key={element.url}>
                       <NeswItem
-                        title={element.title ? element.title : "No Title"}
+                        title={element.title ? element.title : ""}
                         description={
                           element.description
                             ? element.description
-                            : "No Description"
+                            : ""
                         }
                         imageUrl={element.urlToImage}
                         newsUrl={element.url}
