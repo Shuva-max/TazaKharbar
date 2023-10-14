@@ -2,7 +2,7 @@
 
 The News Web Application is a dynamic and user-friendly platform designed to provide real-time categorized news to users. Leveraging a third-party API, this application aims to deliver up-to-the-minute information on a wide range of topics, keeping users informed and engaged.
 
-![Project Screenshot/GIF](![Alt text](<Screenshot.png>))
+![TazaKhabar Screenshot](<Screenshot.png>)
 
 ## Table of Contents
 
